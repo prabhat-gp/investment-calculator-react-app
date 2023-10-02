@@ -1,4 +1,5 @@
 import { useState } from "react";
+import classes from './UserInput.module.css'
 
 const initialUserInput = {
     'current-savings': 10000,
@@ -7,11 +8,12 @@ const initialUserInput = {
     duration: 10
 }
 
-const UserInput = () => {
+const UserInput = (props) => {
     const [userInput, setUserInput] = useState(initialUserInput);
 
     const submitHandler = (event) => {
         event.preventDefault();
+        props.onCalculate(userInput);
         
     };
 
@@ -23,14 +25,14 @@ const UserInput = () => {
         setUserInput((prevInput) => {
             return {
                 ...prevInput,
-                [input]: value,
+                [input]: +value,
             };
         });
     };
 
     return (
-        <form onSubmit = {submitHandler} className = "form">
-        <div className = "input-group">
+        <form onSubmit = {submitHandler} className = {classes.form} >
+        <div className = {classes['input-group']}>
           <p>
             <label htmlFor = "current-savings">Current Savings ($)</label>
             <input 
@@ -50,7 +52,7 @@ const UserInput = () => {
             />
           </p>
         </div>
-        <div className = "input-group">
+        <div className = {classes['input-group']}>
           <p>
             <label htmlFor = "expected-return">
               Expected Interest (%, per year)
@@ -72,11 +74,11 @@ const UserInput = () => {
             />
           </p>
         </div>
-        <p className = "actions">
-          <button onClick = {resetHandler} type = "reset" className = "buttonAlt">
+        <p className = {classes.actions}>
+          <button onClick = {resetHandler} type = "reset" className = {classes.buttonAlt}>
             Reset
           </button>
-          <button type = "submit" className = "button">
+          <button type = "submit" className = {classes.button}>
             Calculate
           </button>
         </p>
